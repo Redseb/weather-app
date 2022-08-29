@@ -7,7 +7,7 @@ interface ToDoItem {
   completed: boolean;
 }
 
-class ToDoStore {
+export class ToDoStoreImpl {
   todos: ToDoItem[] = [];
   constructor() {
     makeAutoObservable(this, {
@@ -45,3 +45,5 @@ class ToDoStore {
     return this.todos.filter((todo) => todo.completed).length;
   }
 }
+
+export const ToDoStore = new ToDoStoreImpl();
