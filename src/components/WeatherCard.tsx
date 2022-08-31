@@ -31,6 +31,7 @@ const styles = StyleSheet.create({
         borderColor: 'black',
         borderRadius: 10,
         padding: 10,
+        backgroundColor: '#D9D9D9',
     },
     dayText: {
         fontSize: width / 20,
