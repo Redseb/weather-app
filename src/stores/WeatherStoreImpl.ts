@@ -30,6 +30,9 @@ class WeatherStoreImpl {
         if (!request.hourly) {
             throw 'Cannot request hourly weather when daily weather is requested';
         }
+        if (!request.day) {
+            throw 'Cannot request hourly weather without a day specified';
+        }
         this.setHourlyWeather(
             await getHourlyWeather(request.latitude, request.longitude, request.day)
         );
