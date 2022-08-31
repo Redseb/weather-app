@@ -37,11 +37,11 @@ const WeatherScreen: React.FC<WeatherScreenProps> = observer(({ weatherStore, lo
     if (!weatherStore.dailyWeather) {
         weatherCards = [<Text key={0}>Fetching weather...</Text>];
     } else {
-        weatherCards = weatherStore.dailyWeather.time.map((day, index) => {
+        weatherCards = weatherStore.dailyWeather.days.map((day, index) => {
             return (
                 <WeatherCard
                     key={index}
-                    day={new Date(day)}
+                    day={day}
                     temperature={weatherStore.dailyWeather.temperature_2m_max[index]}
                 />
             );

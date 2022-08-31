@@ -1,5 +1,5 @@
 type DailyWeather = {
-    time: string[] | undefined;
+    days: Date[] | undefined;
     temperature_2m_max: number[] | undefined;
     weathercode: WeatherCode[] | undefined;
 };

@@ -4,10 +4,6 @@ import { observer } from 'mobx-react';
 import { weatherStore } from '../stores/WeatherStoreImpl';
 import weatherCodeToText from '../util/weatherCodeToText';
 
-// type WeatherDetailsProps = {
-//     weatherStore: WeatherStoreImpl;
-// };
-
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 
@@ -23,7 +19,7 @@ const WeatherDetails: React.FC = observer(() => {
             return (
                 <View key={index} style={styles.rowContainer}>
                     <Text style={styles.text}>
-                        {new Date(weatherStore.hourlyWeather.time[index]).toLocaleTimeString()}
+                        {weatherStore.hourlyWeather.time[index].toLocaleTimeString()}
                     </Text>
                     <Text style={styles.text}>{temp.toFixed(1)}°C</Text>
                     <Text style={styles.text}>
