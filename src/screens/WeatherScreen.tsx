@@ -24,7 +24,6 @@ const WeatherScreen: React.FC<WeatherScreenProps> = observer(({ weatherStore, lo
                     weatherStore.requestDailyWeather({
                         latitude: locationStore.latitude,
                         longitude: locationStore.longitude,
-                        hourly: false,
                     });
                 });
             } else {
@@ -58,7 +57,6 @@ const WeatherScreen: React.FC<WeatherScreenProps> = observer(({ weatherStore, lo
                 </Text>
             </View>
             {weatherCards}
-
             <WeatherDetails />
             <StatusBar style="auto" />
         </View>

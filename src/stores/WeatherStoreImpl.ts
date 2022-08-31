@@ -1,4 +1,4 @@
-import { action, makeAutoObservable, makeObservable, observable } from 'mobx';
+import { action, makeObservable, observable } from 'mobx';
 import DailyWeather from '../types/DailyWeather';
 import HourlyWeather from '../types/HourlyWeather';
 import WeatherRequest from '../types/WeatherRequest';
@@ -23,7 +23,11 @@ class WeatherStoreImpl {
         if (request.hourly) {
             throw 'Cannot request daily weather when hourly weather is requested';
         }
-        this.setDailyWeather(await getDailyWeather(request.latitude, request.longitude));
+        try {
+            this.setDailyWeather(await getDailyWeather(request.latitude, request.longitude));
+        } catch (e) {
+            alert('Something went wrong...');
+        }
     }
 
     async requestHourlyWeather(request: WeatherRequest) {
@@ -33,9 +37,13 @@ class WeatherStoreImpl {
         if (!request.day) {
             throw 'Cannot request hourly weather without a day specified';
         }
-        this.setHourlyWeather(
-            await getHourlyWeather(request.latitude, request.longitude, request.day)
-        );
+        try {
+            this.setHourlyWeather(
+                await getHourlyWeather(request.latitude, request.longitude, request.day)
+            );
+        } catch (e) {
+            alert('Something went wrong...');
+        }
     }
 
     setDailyWeather(dailyWeather: DailyWeather | undefined) {

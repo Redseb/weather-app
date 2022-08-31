@@ -4,9 +4,6 @@ import { observer } from 'mobx-react';
 import { weatherStore } from '../stores/WeatherStoreImpl';
 import weatherCodeToText from '../util/weatherCodeToText';
 
-const width = Dimensions.get('window').width;
-const height = Dimensions.get('window').height;
-
 const WeatherDetails: React.FC = observer(() => {
     let hourlyWeatherList: JSX.Element[];
     if (!weatherStore.hourlyWeather) {
@@ -40,6 +37,9 @@ const WeatherDetails: React.FC = observer(() => {
 });
 
 export default WeatherDetails;
+
+const width = Dimensions.get('window').width;
+const height = Dimensions.get('window').height;
 
 const styles = StyleSheet.create({
     container: {

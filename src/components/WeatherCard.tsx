@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Dimensions, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, Dimensions, TouchableOpacity } from 'react-native';
 import React from 'react';
 import { weatherStore } from '../stores/WeatherStoreImpl';
 import { observer } from 'mobx-react';
@@ -8,8 +8,6 @@ type WeatherCardProps = {
     day: Date;
     temperature: number;
 };
-
-const width = Dimensions.get('window').width;
 
 const WeatherCard: React.FC<WeatherCardProps> = observer(({ day, temperature }) => {
     return (
@@ -30,6 +28,8 @@ const WeatherCard: React.FC<WeatherCardProps> = observer(({ day, temperature }) 
 });
 
 export default WeatherCard;
+
+const width = Dimensions.get('window').width;
 
 const styles = StyleSheet.create({
     container: {

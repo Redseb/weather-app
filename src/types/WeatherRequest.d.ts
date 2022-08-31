@@ -1,7 +1,7 @@
 type WeatherRequest = {
     latitude: number;
     longitude: number;
-    hourly: boolean;
+    hourly?: boolean = false;
     day?: Date;
 };
 
