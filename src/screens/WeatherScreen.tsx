@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import { observer } from 'mobx-react';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { StyleSheet, Text, View, Dimensions } from 'react-native';
 import WeatherCard from '../components/WeatherCard';
 import WeatherDetails from '../components/WeatherDetails';
@@ -13,26 +13,19 @@ type WeatherScreenProps = {
     locationStore: LocationStoreImpl;
 };
 
-const width = Dimensions.get('window').width;
-
 const WeatherScreen: React.FC<WeatherScreenProps> = observer(({ weatherStore, locationStore }) => {
-    const [isLoading, setIsLoading] = useState(true);
+    //Request permission to access location, then get the current location, then get the weather data
     useEffect(() => {
         Location.requestForegroundPermissionsAsync().then((res) => {
-            console.log(res);
             if (res.status === 'granted') {
                 Location.getCurrentPositionAsync({}).then((res) => {
                     locationStore.setLatitude(res.coords.latitude);
                     locationStore.setLongitude(res.coords.longitude);
-                    weatherStore
-                        .requestNewWeather({
-                            latitude: locationStore.latitude,
-                            longitude: locationStore.longitude,
-                            hourly: false,
-                        })
-                        .then(() => {
-                            setIsLoading(false);
-                        });
+                    weatherStore.requestDailyWeather({
+                        latitude: locationStore.latitude,
+                        longitude: locationStore.longitude,
+                        hourly: false,
+                    });
                 });
             } else {
                 alert('This app requires location permissions to work.');
@@ -41,7 +34,7 @@ const WeatherScreen: React.FC<WeatherScreenProps> = observer(({ weatherStore, lo
     }, []);
 
     let weatherCards: JSX.Element[];
-    if (isLoading) {
+    if (!weatherStore.dailyWeather) {
         weatherCards = [<Text key={0}>Fetching weather...</Text>];
     } else {
         weatherCards = weatherStore.dailyWeather.time.map((day, index) => {
@@ -73,6 +66,8 @@ const WeatherScreen: React.FC<WeatherScreenProps> = observer(({ weatherStore, lo
 });
 
 export default WeatherScreen;
+
+const width = Dimensions.get('window').width;
 
 const styles = StyleSheet.create({
     container: {

@@ -16,7 +16,7 @@ const WeatherCard: React.FC<WeatherCardProps> = observer(({ day, temperature }) 
         <TouchableOpacity
             style={styles.container}
             onPress={() => {
-                weatherStore.requestNewWeather({
+                weatherStore.requestHourlyWeather({
                     latitude: locationStore.latitude,
                     longitude: locationStore.longitude,
                     hourly: true,
@@ -24,7 +24,7 @@ const WeatherCard: React.FC<WeatherCardProps> = observer(({ day, temperature }) 
                 });
             }}>
             <Text style={styles.dayText}>{day.toDateString()}</Text>
-            <Text style={styles.temperatureText}>{temperature}C</Text>
+            <Text style={styles.temperatureText}>{temperature}°C</Text>
         </TouchableOpacity>
     );
 });

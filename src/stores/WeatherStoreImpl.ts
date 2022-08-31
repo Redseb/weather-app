@@ -12,20 +12,27 @@ class WeatherStoreImpl {
         makeObservable(this, {
             dailyWeather: observable,
             hourlyWeather: observable,
-            requestNewWeather: action,
+            requestDailyWeather: action,
+            requestHourlyWeather: action,
             setDailyWeather: action,
             setHourlyWeather: action,
         });
     }
 
-    async requestNewWeather(request: WeatherRequest) {
+    async requestDailyWeather(request: WeatherRequest) {
         if (request.hourly) {
-            this.setHourlyWeather(
-                await getHourlyWeather(request.latitude, request.longitude, request.day)
-            );
-        } else {
-            this.setDailyWeather(await getDailyWeather(request.latitude, request.longitude));
+            throw 'Cannot request daily weather when hourly weather is requested';
         }
+        this.setDailyWeather(await getDailyWeather(request.latitude, request.longitude));
+    }
+
+    async requestHourlyWeather(request: WeatherRequest) {
+        if (!request.hourly) {
+            throw 'Cannot request hourly weather when daily weather is requested';
+        }
+        this.setHourlyWeather(
+            await getHourlyWeather(request.latitude, request.longitude, request.day)
+        );
     }
 
     setDailyWeather(dailyWeather: DailyWeather | undefined) {
