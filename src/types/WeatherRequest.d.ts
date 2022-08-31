@@ -1,7 +1,8 @@
 type WeatherRequest = {
     latitude: number;
     longitude: number;
-    hourly: string[] | undefined;
-    daily: string[] | undefined;
+    hourly: boolean;
     current_weather: boolean | undefined;
 };
+
+export default WeatherRequest;
