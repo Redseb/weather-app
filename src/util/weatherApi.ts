@@ -15,7 +15,6 @@ const getHourlyWeather = async (latitude: number, longitude: number, day: Date) 
     var end_date: Date | string = new Date(day);
     end_date.setDate(end_date.getDate() + 1);
     end_date = end_date.toISOString().split('T')[0];
-    console.log(start_date, end_date);
 
     const response = await fetch(
         `${API_URL}latitude=${latitude}&longitude=${longitude}&start_date=${start_date}&end_date=${end_date}&hourly=weathercode,temperature_2m`

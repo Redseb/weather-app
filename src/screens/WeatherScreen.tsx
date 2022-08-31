@@ -4,22 +4,40 @@ import { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, Dimensions } from 'react-native';
 import WeatherCard from '../components/WeatherCard';
 import WeatherDetails from '../components/WeatherDetails';
-import { weatherStore, WeatherStoreImpl } from '../stores/WeatherStoreImpl';
+import { LocationStoreImpl } from '../stores/LocationStoreImpl';
+import { WeatherStoreImpl } from '../stores/WeatherStoreImpl';
+import * as Location from 'expo-location';
 
 type WeatherScreenProps = {
     weatherStore: WeatherStoreImpl;
+    locationStore: LocationStoreImpl;
 };
 
 const width = Dimensions.get('window').width;
 
-const WeatherScreen: React.FC<WeatherScreenProps> = observer(({ weatherStore }) => {
+const WeatherScreen: React.FC<WeatherScreenProps> = observer(({ weatherStore, locationStore }) => {
     const [isLoading, setIsLoading] = useState(true);
     useEffect(() => {
-        weatherStore
-            .requestNewWeather({ latitude: 33.86, longitude: 151.2, hourly: false })
-            .then(() => {
-                setIsLoading(false);
-            });
+        Location.requestForegroundPermissionsAsync().then((res) => {
+            console.log(res);
+            if (res.status === 'granted') {
+                Location.getCurrentPositionAsync({}).then((res) => {
+                    locationStore.setLatitude(res.coords.latitude);
+                    locationStore.setLongitude(res.coords.longitude);
+                    weatherStore
+                        .requestNewWeather({
+                            latitude: locationStore.latitude,
+                            longitude: locationStore.longitude,
+                            hourly: false,
+                        })
+                        .then(() => {
+                            setIsLoading(false);
+                        });
+                });
+            } else {
+                alert('This app requires location permissions to work.');
+            }
+        });
     }, []);
 
     let weatherCards: JSX.Element[];
@@ -41,7 +59,10 @@ const WeatherScreen: React.FC<WeatherScreenProps> = observer(({ weatherStore }) 
         <View style={styles.container}>
             <View>
                 <Text style={styles.titleText}>The Weather App</Text>
-                <Text style={styles.subtitleText}>Showing weather for: </Text>
+                <Text style={styles.subtitleText}>
+                    Showing weather for: {locationStore.latitude.toFixed(2)}N{' '}
+                    {locationStore.longitude.toFixed(2)}E
+                </Text>
             </View>
             {weatherCards}
 

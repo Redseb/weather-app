@@ -1,6 +1,5 @@
 import { ScrollView, StyleSheet, Text, Dimensions, View } from 'react-native';
 import React from 'react';
-import HourlyWeather from '../types/HourlyWeather';
 import { observer } from 'mobx-react';
 import { WeatherStoreImpl } from '../stores/WeatherStoreImpl';
 import weatherCodeToText from '../util/weatherCodeToText';
@@ -17,13 +16,16 @@ const WeatherDetails: React.FC<WeatherDetailsProps> = observer(({ weatherStore }
     if (!weatherStore.hourlyWeather) {
         hourlyWeatherList = [<Text key={0}>Select a date for more details...</Text>];
     } else {
-        hourlyWeatherList = weatherStore.hourlyWeather.time.map((time, index) => {
+        hourlyWeatherList = weatherStore.hourlyWeather.temperature_2m.map((temp, index) => {
+            if (temp == null) {
+                return;
+            }
             return (
                 <View key={index} style={styles.rowContainer}>
-                    <Text style={styles.text}>{new Date(time).toLocaleTimeString()}</Text>
                     <Text style={styles.text}>
-                        {weatherStore.hourlyWeather.temperature_2m[index].toFixed(1)}°C
+                        {new Date(weatherStore.hourlyWeather.time[index]).toLocaleTimeString()}
                     </Text>
+                    <Text style={styles.text}>{temp.toFixed(1)}°C</Text>
                     <Text style={styles.text}>
                         {weatherCodeToText(weatherStore.hourlyWeather.weathercode[index])}
                     </Text>

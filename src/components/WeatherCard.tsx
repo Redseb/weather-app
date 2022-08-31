@@ -1,6 +1,8 @@
 import { StyleSheet, Text, View, Dimensions, TouchableOpacity } from 'react-native';
 import React from 'react';
 import { weatherStore } from '../stores/WeatherStoreImpl';
+import { observer } from 'mobx-react';
+import { locationStore } from '../stores/LocationStoreImpl';
 
 type WeatherCardProps = {
     day: Date;
@@ -9,14 +11,14 @@ type WeatherCardProps = {
 
 const width = Dimensions.get('window').width;
 
-const WeatherCard: React.FC<WeatherCardProps> = ({ day, temperature }) => {
+const WeatherCard: React.FC<WeatherCardProps> = observer(({ day, temperature }) => {
     return (
         <TouchableOpacity
             style={styles.container}
             onPress={() => {
                 weatherStore.requestNewWeather({
-                    latitude: 33.86,
-                    longitude: 151.2,
+                    latitude: locationStore.latitude,
+                    longitude: locationStore.longitude,
                     hourly: true,
                     day: day,
                 });
@@ -25,7 +27,7 @@ const WeatherCard: React.FC<WeatherCardProps> = ({ day, temperature }) => {
             <Text style={styles.temperatureText}>{temperature}C</Text>
         </TouchableOpacity>
     );
-};
+});
 
 export default WeatherCard;
 
