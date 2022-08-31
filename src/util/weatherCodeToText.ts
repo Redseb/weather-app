@@ -1,5 +1,6 @@
 import WeatherCode from '../types/WeatherCode';
 
+// Formats a weather code to human readable text (e.g. 'MOSTLY_CLOUDY' -> 'Mostly cloudy'))
 const weatherCodeToText = (weatherCode: WeatherCode) => {
     const index = Object.values(WeatherCode).indexOf(weatherCode as unknown as WeatherCode);
     const key = Object.keys(WeatherCode)[index];
