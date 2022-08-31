@@ -1,5 +1,6 @@
-import { StyleSheet, Text, View, Dimensions } from 'react-native';
+import { StyleSheet, Text, View, Dimensions, TouchableOpacity } from 'react-native';
 import React from 'react';
+import { weatherStore } from '../stores/WeatherStoreImpl';
 
 type WeatherCardProps = {
     day: string;
@@ -10,10 +11,18 @@ const width = Dimensions.get('window').width;
 
 const WeatherCard: React.FC<WeatherCardProps> = ({ day, temperature }) => {
     return (
-        <View style={styles.container}>
+        <TouchableOpacity
+            style={styles.container}
+            onPress={() => {
+                weatherStore
+                    .requestNewWeather({ latitude: 33.86, longitude: 151.2, hourly: true })
+                    .then(() => {
+                        console.log(weatherStore.hourlyWeather);
+                    });
+            }}>
             <Text style={styles.dayText}>{day}</Text>
             <Text style={styles.temperatureText}>{temperature}C</Text>
-        </View>
+        </TouchableOpacity>
     );
 };
 
@@ -21,10 +30,10 @@ export default WeatherCard;
 
 const styles = StyleSheet.create({
     container: {
-        width: width / 3,
-        height: width / 3,
+        width: width - 50,
+        height: width / 7.5,
         display: 'flex',
-        flexDirection: 'column',
+        flexDirection: 'row',
         justifyContent: 'space-evenly',
         alignItems: 'center',
         borderWidth: 1,

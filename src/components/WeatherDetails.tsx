@@ -1,24 +1,27 @@
 import { ScrollView, StyleSheet, Text, Dimensions, View } from 'react-native';
 import React from 'react';
 import HourlyWeather from '../types/HourlyWeather';
+import { observer } from 'mobx-react';
+import { WeatherStoreImpl } from '../stores/WeatherStoreImpl';
 
 type WeatherDetailsProps = {
-    hourlyWeather: HourlyWeather | undefined;
+    weatherStore: WeatherStoreImpl;
 };
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 
-const WeatherDetails: React.FC<WeatherDetailsProps> = ({ hourlyWeather }) => {
+const WeatherDetails: React.FC<WeatherDetailsProps> = observer(({ weatherStore }) => {
     let hourlyWeatherList: JSX.Element[];
-    if (!hourlyWeather) {
-        hourlyWeatherList = [<Text>Select a date for more details...</Text>];
+    console.log(weatherStore.hourlyWeather);
+    if (!weatherStore.hourlyWeather) {
+        hourlyWeatherList = [<Text key={0}>Select a date for more details...</Text>];
     } else {
-        hourlyWeatherList = hourlyWeather.time.map((time, index) => {
+        hourlyWeatherList = weatherStore.hourlyWeather.time.map((time, index) => {
             return (
-                <Text>
-                    {time.getTime()} - {hourlyWeather.temperature_2m.at(index)}-
-                    {hourlyWeather.weather_code.at(index)}
+                <Text key={index}>
+                    {time} - {weatherStore.hourlyWeather.temperature_2m[index]}-
+                    {weatherStore.hourlyWeather.weathercode[index]}
                 </Text>
             );
         });
@@ -31,7 +34,7 @@ const WeatherDetails: React.FC<WeatherDetailsProps> = ({ hourlyWeather }) => {
             </ScrollView>
         </View>
     );
-};
+});
 
 export default WeatherDetails;
 

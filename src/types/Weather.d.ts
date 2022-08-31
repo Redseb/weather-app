@@ -6,7 +6,7 @@ type Weather = {
     utc_offset_seconds: number;
     timezone: string;
     timezone_abbreviation: string;
-    hourly: HourlyWeather[] | undefined;
+    hourly: HourlyWeather | undefined;
     hourly_units: HourlyUnits | undefined;
-    daily: DailyWeather[] | undefined;
+    daily: DailyWeather | undefined;
 };
