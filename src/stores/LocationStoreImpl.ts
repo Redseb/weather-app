@@ -20,5 +20,6 @@ class LocationStoreImpl {
     }
 }
 
+// Export singleton instance of LocationStoreImpl
 const locationStore = new LocationStoreImpl();
 export { locationStore, LocationStoreImpl };

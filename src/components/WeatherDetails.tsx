@@ -1,17 +1,17 @@
 import { ScrollView, StyleSheet, Text, Dimensions, View } from 'react-native';
 import React from 'react';
 import { observer } from 'mobx-react';
-import { WeatherStoreImpl } from '../stores/WeatherStoreImpl';
+import { weatherStore } from '../stores/WeatherStoreImpl';
 import weatherCodeToText from '../util/weatherCodeToText';
 
-type WeatherDetailsProps = {
-    weatherStore: WeatherStoreImpl;
-};
+// type WeatherDetailsProps = {
+//     weatherStore: WeatherStoreImpl;
+// };
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 
-const WeatherDetails: React.FC<WeatherDetailsProps> = observer(({ weatherStore }) => {
+const WeatherDetails: React.FC = observer(() => {
     let hourlyWeatherList: JSX.Element[];
     if (!weatherStore.hourlyWeather) {
         hourlyWeatherList = [<Text key={0}>Select a date for more details...</Text>];

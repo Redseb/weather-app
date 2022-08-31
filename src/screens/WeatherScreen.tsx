@@ -59,7 +59,7 @@ const WeatherScreen: React.FC<WeatherScreenProps> = observer(({ weatherStore, lo
             </View>
             {weatherCards}
 
-            <WeatherDetails weatherStore={weatherStore} />
+            <WeatherDetails />
             <StatusBar style="auto" />
         </View>
     );
