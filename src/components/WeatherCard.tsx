@@ -1,10 +1,12 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, Dimensions } from 'react-native';
 import React from 'react';
 
 type WeatherCardProps = {
     day: string;
     temperature: number;
 };
+
+const width = Dimensions.get('window').width;
 
 const WeatherCard: React.FC<WeatherCardProps> = ({ day, temperature }) => {
     return (
@@ -19,6 +21,8 @@ export default WeatherCard;
 
 const styles = StyleSheet.create({
     container: {
+        width: width / 3,
+        height: width / 3,
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-evenly',
@@ -26,14 +30,13 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: 'black',
         borderRadius: 10,
-        elevation: 5,
         padding: 10,
     },
     dayText: {
-        fontSize: 20,
+        fontSize: width / 20,
         fontWeight: 'bold',
     },
     temperatureText: {
-        fontSize: 15,
+        fontSize: width / 25,
     },
 });
