@@ -3,7 +3,7 @@ import React from 'react';
 import { weatherStore } from '../stores/WeatherStoreImpl';
 
 type WeatherCardProps = {
-    day: string;
+    day: Date;
     temperature: number;
 };
 
@@ -14,13 +14,14 @@ const WeatherCard: React.FC<WeatherCardProps> = ({ day, temperature }) => {
         <TouchableOpacity
             style={styles.container}
             onPress={() => {
-                weatherStore
-                    .requestNewWeather({ latitude: 33.86, longitude: 151.2, hourly: true })
-                    .then(() => {
-                        console.log(weatherStore.hourlyWeather);
-                    });
+                weatherStore.requestNewWeather({
+                    latitude: 33.86,
+                    longitude: 151.2,
+                    hourly: true,
+                    day: day,
+                });
             }}>
-            <Text style={styles.dayText}>{day}</Text>
+            <Text style={styles.dayText}>{day.toDateString()}</Text>
             <Text style={styles.temperatureText}>{temperature}C</Text>
         </TouchableOpacity>
     );

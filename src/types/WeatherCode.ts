@@ -28,3 +28,5 @@ enum WeatherCode {
     THUNDERSTORM_HAIL_LIGHT = 96,
     THUNDERSTORM_HAIL_MODERATE = 99,
 }
+
+export default WeatherCode;

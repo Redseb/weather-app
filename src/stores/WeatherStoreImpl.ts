@@ -20,7 +20,9 @@ class WeatherStoreImpl {
 
     async requestNewWeather(request: WeatherRequest) {
         if (request.hourly) {
-            this.setHourlyWeather(await getHourlyWeather(request.latitude, request.longitude));
+            this.setHourlyWeather(
+                await getHourlyWeather(request.latitude, request.longitude, request.day)
+            );
         } else {
             this.setDailyWeather(await getDailyWeather(request.latitude, request.longitude));
         }

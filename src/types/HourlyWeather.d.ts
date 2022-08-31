@@ -1,5 +1,5 @@
 type HourlyWeather = {
-    time: string[] | undefined;
+    time: Date[] | undefined;
     temperature_2m: number[] | undefined;
     weathercode: WeatherCode[] | undefined;
 };
